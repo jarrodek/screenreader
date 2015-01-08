@@ -1,0 +1,38 @@
+{
+  "CONST_POINT": {
+    "message": "point",
+    "description": "replacement for 'dot' in decimals"
+  },
+  "CONST_DOT": {
+    "message": "dot",
+    "description": "replacement for 'dot' in senteces"
+  },
+  "CONST_COMA": {
+    "message": "comma",
+    "description": "replacement for comma sign"
+  },
+  "CONST_EXLM": {
+    "message": "exclamation mark",
+    "description": "replacement for exclamation mark"
+  },
+  "CONST_QUESTM": {
+    "message": "question mark",
+    "description": "replacement for question mark"
+  },
+  "CONST_QUOTM": {
+    "message": "quotation mark",
+    "description": "replacement for quotation mark"
+  },
+  "CONST_DOLLAR": {
+    "message": "dollear",
+    "description": "replacement for $ sign"
+  },
+  "CONST_POUND": {
+    "message": "pound",
+    "description": "replacement for £ sign"
+  },
+  "CONST_AT": {
+    "message": "at,",
+    "description": "replacement for @ sign"
+  }
+}

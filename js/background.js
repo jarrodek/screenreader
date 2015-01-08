@@ -9,47 +9,70 @@ var reader = {};
  */
 reader.app = {};
 
-reader.app.init = function () {
-    reader.app.setBrowserIcon();
-    chrome.browserAction.setTitle({
-        title: 'Toggle On/Off'
-    });
-};
+reader.app.active = null;
 
-reader.app.setBrowserIcon = function () {
-    reader.app.isActive().then(function (active) {
-        var icon = chrome.extension.getURL('img/icon32.png');
-        if (!active) {
-            icon = chrome.extension.getURL('img/icon32_off.png');
-        }
-        chrome.browserAction.setIcon({
-            path: icon
-        });
-    });
+reader.app.init = function () {
+  reader.app.setBrowserIcon();
+  chrome.browserAction.setTitle({
+      title: 'Toggle On/Off'
+  });
+  reader.app.listen();
 };
 
 reader.app.isActive = function () {
-    return new Promise(function (resolve, reject) {
-        chrome.storage.sync.get({active: true}, function (data) {
-            resolve(data.active);
-        });
+  return new Promise(function (resolve, reject) {
+    if(reader.app.active !== null){
+      resolve(reader.app.active);
+      return;
+    }
+    chrome.storage.sync.get({active: true}, function (data) {
+      reader.app.active = data.active;
+      resolve(data.active);
     });
+  });
+};
+
+reader.app.setBrowserIcon = function () {
+  reader.app.isActive().then(function (active) {
+    var icon = chrome.extension.getURL('img/icon32.png');
+    if (!active) {
+      icon = chrome.extension.getURL('img/icon32_off.png');
+    }
+    chrome.browserAction.setIcon({
+      path: icon
+    });
+  });
 };
 
 
 reader.app.toggleActive = function () {
-    console.log('toggleActive');
-    reader.app.isActive().then(function (active) {
-        if (active) {
-            chrome.storage.sync.set({active: false}, function (data) {
-                reader.app.setBrowserIcon();
-            });
-        } else {
-            chrome.storage.sync.set({active: true}, function (data) {
-                reader.app.setBrowserIcon();
-            });
-        }
-    });
+  if(reader.app.active === null) reader.app.active = false;
+  reader.app.active = !reader.app.active;
+  chrome.storage.sync.set({active: reader.app.active}, function (data) {
+    reader.app.setBrowserIcon();
+  });
+};
+
+
+
+reader.app.listen = function(){
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.parse === "image"){
+      var img = new Image();
+      img.onload = function () {
+        var canvas = Pixastic.process(img, "brightness", {brightness: 0, contrast: 1.5});
+        var url = canvas.toDataURL();
+        sendResponse({img: url});
+      };
+      img.src = request.img;
+      return true;
+    } else if(request.payload === "isactive"){
+      reader.app.isActive().then(function (active) {
+        sendResponse({active: active});
+      });
+      return true;
+    }
+  });
 };
 
 //chrome.extension.onRequest.addListener(

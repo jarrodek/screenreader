@@ -1,19 +1,20 @@
 #speaker-container{
-    position: fixed;
-    top: 7px;
-    right: 7px;
-    width: 144px;
-    height: 148px;
-/*    background-color: red;*/
+  position: fixed;
+  top: 7px;
+  right: 7px;
+  width: 144px;
+  height: 148px;
+  z-index: 100000000;
 }
+#speaker-container canvas{
+  cursor: pointer;
+}
+
 .hidden{
-    display: none !important;
+  display: none !important;
 }
 
 .screenreader-highlight {
-    text-decoration: underline;
-/*    -webkit-transition: -webkit-transform 1s linear;
-    -webkit-transform: scale(1.2);*/
-/*    position: relative;*/
-    background: rgba(255,255,255,0.5);
+  text-decoration: underline;
+  background: rgba(255,255,255,0.5);
 }
