@@ -1,13 +1,15 @@
 {
-  "name": "Screen Reader",
-  "version": "0.6.0",
+  "name": "Screen Reader for Google Chrome",
+  "short_name": "Screen Reader",
+  "version": "0.6.2",
   "manifest_version": 2,
   "description": "This extension provides aid for the visually handicapped.",
   "default_locale": "en",
   "minimum_chrome_version": "39",
   "icons": {
       "32": "img/icon32.png",
-      "48": "img/icon48.png"
+      "48": "img/icon48.png",
+      "128": "img/icon128.png"
   },
   "browser_action": {
     "default_icon": "img/icon32.png"
@@ -17,7 +19,7 @@
     "scripts": ["js/pixastic.js", "js/actions/brightness.js", "js/background.js"]
   },
   "permissions": [
-    "storage"
+    "storage", "tts"
   ],
   "content_scripts": [
     {
@@ -29,5 +31,6 @@
   ],
   "web_accessible_resources": [
     "img/player-volume-2.png"
-  ]
+  ],
+  "options_page": "options.html"
 }
