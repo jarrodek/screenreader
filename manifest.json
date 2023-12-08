@@ -1,22 +1,19 @@
 {
   "name": "Screen Reader for Google Chrome",
   "short_name": "Screen Reader",
-  "version": "0.6.2",
-  "manifest_version": 2,
-  "description": "This extension provides aid for the visually handicapped.",
+  "version": "0.7.0",
+  "manifest_version": 3,
+  "description": "This extension provides aid for the visually impaired people.",
   "default_locale": "en",
-  "minimum_chrome_version": "39",
+  "minimum_chrome_version": "120",
   "icons": {
-      "32": "img/icon32.png",
-      "48": "img/icon48.png",
-      "128": "img/icon128.png"
-  },
-  "browser_action": {
-    "default_icon": "img/icon32.png"
+      "32": "img/32x32-on.png",
+      "48": "img/48x48-on.png",
+      "128": "img/128x128-on.png"
   },
   "background": {
-    "persistent": false,
-    "scripts": ["js/pixastic.js", "js/actions/brightness.js", "js/background.js"]
+    "service_worker": "src/worker.js",
+    "type": "module"
   },
   "permissions": [
     "storage", "tts"
@@ -24,13 +21,28 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["js/video.js", "js/audio.js"],
-      "css": ["css/main.css"],
+      "js": ["src/content.js"],
+      "css": ["css/content.css"],
       "run_at": "document_end"
     }
   ],
   "web_accessible_resources": [
-    "img/player-volume-2.png"
+    {
+      "resources": [
+        "src/content/audio.js",
+        "src/content/video.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
   ],
-  "options_page": "options.html"
+  "action": {
+    "default_icon": {
+      "16": "img/16x16-on.png",
+      "32": "img/32x32-on.png"
+    },
+    "default_title": "Show options",
+    "default_popup": "options.html"
+  }
 }

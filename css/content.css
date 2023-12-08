@@ -14,7 +14,7 @@
   display: none !important;
 }
 
-.screenreader-highlight {
-  text-decoration: underline;
+.sr-highlight {
+  outline: 5px auto -webkit-focus-ring-color;
   background: rgba(255,255,255,0.5);
 }

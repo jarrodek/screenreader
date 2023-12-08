@@ -1,2 +1,3 @@
-# screenreader
-Extension for Google Chrome for reading all text on website and read it useing TTS service.
+# The Screen Reader Browser Extension
+
+An extension for a web browser that read text on a web page using a built-in text-to-speech service.
