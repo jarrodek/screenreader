@@ -3,7 +3,6 @@
 const NO_TEXT = "srNoText";
 const NO_TEXT_ATT = "data-sr-no-text";
 const HIGHLIGHT = "sr-highlight";
-const CLICKED = "srClicked";
 
 /**
  * The class that is responsible for managing text-to-speech on a web page.
@@ -35,6 +34,15 @@ export default class AudioContentScript {
     if (node.nodeType !== Node.ELEMENT_NODE) {
       return;
     }
+    this.processNodeHover(node);
+  }
+
+  /**
+   * Adds the highlight class to elements that have text in it.
+   * 
+   * @param {HTMLElement} node 
+   */
+  processNodeHover(node) {
     if (
       node.nodeName === "BODY" ||
       node.dataset[NO_TEXT] ||
@@ -60,6 +68,15 @@ export default class AudioContentScript {
     if (node.nodeType !== Node.ELEMENT_NODE) {
       return;
     }
+    this.processNodeOut(node);
+  }
+
+  /**
+   * Removes the highlight class.
+   * 
+   * @param {HTMLElement} node 
+   */
+  processNodeOut(node) {
     if (node.classList.contains(HIGHLIGHT)) {
       node.classList.remove(HIGHLIGHT);
     }
@@ -78,20 +95,8 @@ export default class AudioContentScript {
     if (!node.classList.contains(HIGHLIGHT)) {
       return;
     }
-    if (!node.dataset[CLICKED]) {
-      node.dataset[CLICKED] = "true";
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    const clone = /** @type HTMLElement */ (node.cloneNode(true));
-    const remove = Array.from(
-      clone.querySelectorAll("script,style,img,object,embed,svg")
-    );
-    remove.forEach((node) => {
-      node.parentNode.removeChild(node);
-    });
-    let txt = this.getNodeText(node).trim();
-    txt = txt.replace(/[\s]{2,}/gi, " ").trim();
+    const clone = this.prepareClone(node);
+    const txt = this.getNodeText(clone).trim();
     if (txt === "") {
       return;
     }
@@ -99,25 +104,46 @@ export default class AudioContentScript {
   }
 
   /**
+   * Makes a usable for text extracting copy of a node.
+   * It removes all not relevant children from the copy.
+   * 
+   * @param {Element} node 
+   * @returns {Element}
+   */
+  prepareClone(node) {
+    const clone = /** @type Element */ (node.cloneNode(true));
+    const remove = Array.from(
+      clone.querySelectorAll("script,style,img,object,embed,audio,video,svg")
+    );
+    remove.forEach((node) => {
+      node.parentNode.removeChild(node);
+    });
+    return clone;
+  }
+
+  /**
    * Reads the text content of an element.
-   * @param {HTMLElement} element The element to read the text content from
+   * @param {ChildNode} element The element to read the text content from
    * @returns {string} The text content of the element.
    */
   getNodeText(element) {
     let result = '';
     if (element.childNodes.length > 0) {
       for (let i = 0; i < element.childNodes.length; i++) {
-        const child = /** @type HTMLElement */ (element.childNodes[i]);
-        result += this.getNodeText(child) + " ";
+        const child = /** @type ChildNode */ (element.childNodes[i]);
+        const value = this.getNodeText(child);
+        if (value) {
+          result += value + " ";
+        }
       }
     }
-    if (
-      element.nodeType === Node.TEXT_NODE &&
-      element.nodeValue.trim() !== ""
-    ) {
-      result += element.nodeValue.trim();
+    if (element.nodeType === Node.TEXT_NODE) {
+      const value = element.nodeValue.trim();
+      if (value) {
+        result += value;
+      }
     }
-    return result;
+    return result.trim();
   }
 
   /**

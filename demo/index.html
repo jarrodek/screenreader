@@ -7,11 +7,13 @@
   <title>Demo page</title>
 </head>
 <body>
-  <header><h1>Screen reader demo page</h1></header>
+  <header>
+    <h1>Screen reader demo page</h1>
+  </header>
   <main>
     <h2>H2 header</h2>
-    <p>This is a text inside a paragraph.</p>
-    <article>
+    <p id="short">This is a text inside a paragraph.</p>
+    <article id="long">
       The Chrome Screen Reader is an extension developed to help visually impaired people consume web content.
 
       It was originally developed as a part of the Google hackathon in Warsaw, Poland, circa 2012.
@@ -29,6 +31,11 @@
       <img src="./javascript-math-image-exercise-40.svg" alt="random image"/>
       <figcaption>A random image</figcaption>
     </figure>
+
+    <div id="notActive" data-sr-no-text="true">This will never be read.</div>
+
+    <span id="noText"><hr/></span>
+
     <footer>
       Developed with &lt;3 by Pawel Uchida-Psztyc.
     </footer>

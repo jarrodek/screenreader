@@ -1,20 +1,4 @@
-#speaker-container{
-  position: fixed;
-  top: 7px;
-  right: 7px;
-  width: 144px;
-  height: 148px;
-  z-index: 100000000;
-}
-#speaker-container canvas{
-  cursor: pointer;
-}
-
-.hidden{
-  display: none !important;
-}
-
 .sr-highlight {
   outline: 5px auto -webkit-focus-ring-color;
-  background: rgba(255,255,255,0.5);
+  background: rgba(255, 255, 255, 0.5);
 }

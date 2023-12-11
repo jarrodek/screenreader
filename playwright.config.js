@@ -31,7 +31,7 @@ export default /** @type PlaywrightTestConfig */ ({
     },
   ],
 
-  testMatch: /\/test\/.*\.test\.js/,
+  testMatch: /\/test\/.*\.test\.extension\.js/,
 
   webServer: {
     command: "npx wds --port=8000",

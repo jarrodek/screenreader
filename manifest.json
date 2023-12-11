@@ -1,7 +1,7 @@
 {
   "name": "Screen Reader for Google Chrome",
   "short_name": "Screen Reader",
-  "version": "0.7.0",
+  "version": "0.0.1",
   "manifest_version": 3,
   "description": "This extension provides aid for the visually impaired people.",
   "default_locale": "en",

@@ -2,7 +2,8 @@
   "env": {
     "es2021": true,
     "browser": true,
-    "node": false
+    "node": false,
+    "webextensions": true
   },
   "extends": [
     "eslint:recommended",
@@ -15,9 +16,9 @@
   "rules": {
     "no-console": "error"
   },
-  "globals": {
-    "chrome": true
-  },
+  "plugins": [
+    "no-only-tests"
+  ],
   "overrides": [
     {
       "files": [
@@ -35,7 +36,11 @@
       ],
       "env": {
         "browser": true,
-        "node": true
+        "node": true,
+        "mocha": true
+      },
+      "rules": {
+        "no-only-tests/no-only-tests": "error"
       }
     }
   ]

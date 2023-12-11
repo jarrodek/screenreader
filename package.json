@@ -1,6 +1,6 @@
 {
   "name": "screen-reader",
-  "version": "0.0.1",
+  "version": "0.8.0",
   "description": "This extension provides aid for the visually impaired people.",
   "type": "module",
   "license": "CC-BY-2.0",
@@ -25,19 +25,33 @@
     "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
     "lint": "npm run lint:eslint",
     "format": "npm run format:eslint",
-    "test": "npx playwright test",
-    "prepare": "npx playwright install chromium && husky install"
+    "test:extension": "npx playwright test",
+    "test:web": "wtr --coverage --playwright --browsers chromium",
+    "test": "npm run test:extension && npm run test:web",
+    "prepare": "npx playwright install chromium && husky install",
+    "build": "node scripts/bundle.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
+    "@esm-bundle/chai": "^4.3.4-fix.0",
+    "@open-wc/semantic-dom-diff": "^0.20.1",
+    "@open-wc/testing": "^4.0.0",
     "@playwright/test": "^1.40.1",
+    "@types/archiver": "^6.0.2",
     "@types/chrome": "^0.0.253",
+    "@types/mocha": "^10.0.6",
+    "@types/sinon": "^17.0.2",
     "@web/dev-server": "^0.4.1",
+    "@web/test-runner": "^0.18.0",
+    "@web/test-runner-playwright": "^0.11.0",
+    "archiver": "^6.0.1",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-no-only-tests": "^3.1.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
+    "sinon": "^17.0.1",
     "typescript": "^5.3.2"
   },
   "husky": {
