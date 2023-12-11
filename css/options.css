@@ -2,9 +2,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  /*height: 100%;*/
   background-color: #fcfcfc;
-  /*font-size: 140%;*/
   font-family: Roboto, sans-serif;
   box-sizing: border-box;
   width: 420px;
