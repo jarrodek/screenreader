@@ -20,6 +20,8 @@ jobs:
           node-version: 21
       - name: Install dependencies
         run: npm ci
+      - name: Run test
+        run: npm test
   tag:
     name: "Publishing Tag"
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
